@@ -3,12 +3,10 @@ import Summary from '../Summary';
 
 import { Container } from './styles';
 
-const Dashboard: React.FC = () => {
-  return (
-    <Container>
-      <Summary />
-    </Container>
-  );
-}
+const Dashboard: React.FC = () => (
+  <Container>
+    <Summary />
+  </Container>
+);
 
 export default Dashboard;
