@@ -5,6 +5,11 @@ export const Container = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   margin-top: -10rem;
+
+  @media (max-width: 798px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 3;
+  }
 `;
 
 export const Item = styled.div`
