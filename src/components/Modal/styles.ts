@@ -5,15 +5,18 @@ export const CloseContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   h1 {
     font-weight: 600;
     font-size: 22px;
     line-height: 36px;
   }
+
   button {
     background: transparent;
-    color: #fff;
+    color: #333;
     border: none;
+
     svg {
       font-size: 22px;
     }

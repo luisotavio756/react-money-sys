@@ -37,8 +37,6 @@ const Modal: React.FC<IModalProps> = ({
           bottom: 'auto',
           marginRight: '-50%',
           transform: 'translate(-50%, -50%)',
-          background: '#312e38',
-          color: '#000000',
           borderRadius: '8px',
           maxWidth: '736px',
           width: '100%',
