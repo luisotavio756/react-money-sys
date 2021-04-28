@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useCallback, useState } from 'react';
 import Modal from '../Modal';
 import { Container, RadioBox, TransactionTypeContainer } from './styles';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
+import api from '../../services/api';
 
 interface ICreateTransactionModalProps {
   isNewTransactionModalOpen: boolean;
@@ -14,6 +15,22 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({
   isNewTransactionModalOpen,
 }) => {
   const [type, setType] = useState('deposit');
+  const [title, setTitle] = useState('');
+  const [value, setValue] = useState(0);
+  const [category, setCategory] = useState('');
+
+  const handleCreateNewTransaction = useCallback((e: FormEvent) => {
+    e.preventDefault();
+
+    const data = {
+      type,
+      title,
+      value,
+      category,
+    };
+
+    api.post('/transactions', data);
+  }, [type, title, value, category]);
 
   return (
     <Modal
@@ -21,15 +38,19 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({
       title="Cadastrar transação"
       setIsOpen={handleCloseNewTransactionModal}
     >
-      <Container>
+      <Container onSubmit={handleCreateNewTransaction}>
         <input
           type="text"
           placeholder="Título"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
 
         <input
           type="number"
           placeholder="Valor"
+          value={value}
+          onChange={(e) => setValue(Number(e.target.value))}
         />
         <TransactionTypeContainer>
           <RadioBox
@@ -55,6 +76,8 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({
         <input
           type="text"
           placeholder="Categoria"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
         />
 
         <button type="submit">Cadastrar</button>
