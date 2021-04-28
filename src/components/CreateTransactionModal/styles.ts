@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Container = styled.form`
   margin-top: 2rem;
@@ -42,5 +43,39 @@ export const Container = styled.form`
     }
 
     outline: none;
+  }
+`;
+
+export const TransactionTypeContainer = styled.div`
+  margin: 1rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1rem;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 4rem;
+    border: 1px solid #d7d7d7;
+    border-radius: 0.25rem;
+    background: transparent;
+    transition: border-color 0.2s;
+
+    img {
+      margin-right: 0.25rem;
+      height: 20px;
+      width: 20px;
+    }
+
+    span {
+      font-size: 1rem;
+      color: var(--text-title);
+    }
+
+    &:hover {
+      border-color: ${darken(0.1, '#d7d7d7')}
+    }
   }
 `;
