@@ -17,7 +17,22 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({
     setIsOpen={handleCloseNewTransactionModal}
   >
     <Container>
-      <input type="text" />
+      <input
+        type="text"
+        placeholder="Título"
+      />
+
+      <input
+        type="number"
+        placeholder="Valor"
+      />
+
+      <input
+        type="text"
+        placeholder="Categoria"
+      />
+
+      <button type="submit">Cadastrar</button>
     </Container>
   </Modal>
 );

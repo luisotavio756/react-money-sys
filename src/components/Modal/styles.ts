@@ -10,6 +10,7 @@ export const CloseContainer = styled.div`
     font-weight: 600;
     font-size: 22px;
     line-height: 36px;
+    color: var(--text-title);
   }
 
   button {
