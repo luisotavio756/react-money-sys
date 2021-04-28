@@ -9,6 +9,8 @@ interface IModalProps {
   title: string;
 }
 
+ReactModal.setAppElement('#root');
+
 const Modal: React.FC<IModalProps> = ({
   children,
   isOpen,
