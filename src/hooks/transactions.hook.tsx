@@ -1,0 +1,40 @@
+import React, {
+  createContext, useContext, useEffect, useMemo, useState,
+} from 'react';
+import ITransaction from '../dtos/ITransaction';
+import api from '../services/api';
+
+interface ITransactionContextData {
+  transactions: ITransaction[];
+}
+
+const TransactionsContext = createContext({} as ITransactionContextData);
+
+const TransactionsProvider: React.FC = ({ children }) => {
+  const [transactions, setTransactions] = useState<ITransaction[]>([]);
+
+  useEffect(() => {
+    api.get('/transactions').then((response) => setTransactions(response.data.transactions));
+  }, []);
+
+  return (
+    <TransactionsContext.Provider value={{ transactions }}>
+      {children}
+    </TransactionsContext.Provider>
+  );
+};
+
+function useTransactions(): ITransactionContextData {
+  const context = useContext(TransactionsContext);
+
+  if (!context) {
+    throw new Error('useTransactions must be use within TransactionsProvider');
+  }
+
+  return context;
+}
+
+export {
+  TransactionsProvider,
+  useTransactions,
+};
