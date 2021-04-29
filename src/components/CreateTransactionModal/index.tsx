@@ -77,8 +77,8 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({
           </RadioBox>
           <RadioBox
             type="button"
-            onClick={() => setType('outdraw')}
-            isActive={type === 'outdraw'}
+            onClick={() => setType('withdraw')}
+            isActive={type === 'withdraw'}
             activeColor="red"
           >
             <img src={outcomeImg} alt="Saída" />

@@ -5,8 +5,15 @@ import ITransaction from '../dtos/ITransaction';
 import api from '../services/api';
 
 type ICreateTransaction = Omit<ITransaction, 'id' | 'createdAt'>;
+
+interface ISummary {
+  deposits: number;
+  withdraws: number;
+  total: number;
+}
 interface ITransactionContextData {
   transactions: ITransaction[];
+  summary: ISummary;
   createTransaction(data: ICreateTransaction): void;
 }
 
@@ -32,12 +39,28 @@ const TransactionsProvider: React.FC = ({ children }) => {
     setTransactions((oldState) => [...oldState, transaction]);
   }, []);
 
+  const summary = useMemo(() => transactions.reduce((acc, transaction) => {
+    if (transaction.type === 'deposit') {
+      acc.deposits += transaction.amount;
+      acc.total += transaction.amount;
+    } else if (transaction.type === 'withdraw') {
+      acc.withdraws += transaction.amount;
+      acc.total -= transaction.amount;
+    }
+
+    return acc;
+  }, {
+    deposits: 0,
+    withdraws: 0,
+    total: 0,
+  }), [transactions]);
+
   useEffect(() => {
     api.get('/transactions').then((response) => setTransactions(response.data.transactions));
   }, []);
 
   return (
-    <TransactionsContext.Provider value={{ transactions, createTransaction }}>
+    <TransactionsContext.Provider value={{ transactions, summary, createTransaction }}>
       {children}
     </TransactionsContext.Provider>
   );
