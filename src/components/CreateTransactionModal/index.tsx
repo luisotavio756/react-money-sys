@@ -4,6 +4,7 @@ import { Container, RadioBox, TransactionTypeContainer } from './styles';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
 import api from '../../services/api';
+import { useTransactions } from '../../hooks/transactions.hook';
 
 interface ICreateTransactionModalProps {
   isNewTransactionModalOpen: boolean;
@@ -16,21 +17,33 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({
 }) => {
   const [type, setType] = useState('deposit');
   const [title, setTitle] = useState('');
-  const [value, setValue] = useState(0);
+  const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState('');
+  const { createTransaction } = useTransactions();
 
-  const handleCreateNewTransaction = useCallback((e: FormEvent) => {
+  const handleCreateNewTransaction = useCallback(async (e: FormEvent) => {
     e.preventDefault();
 
     const data = {
       type,
       title,
-      value,
+      amount,
       category,
     };
 
-    api.post('/transactions', data);
-  }, [type, title, value, category]);
+    try {
+      await createTransaction(data);
+
+      handleCloseNewTransactionModal();
+
+      setType('deposit');
+      setTitle('');
+      setAmount(0);
+      setCategory('');
+    } catch (error) {
+      alert('Insertion error');
+    }
+  }, [type, title, amount, category, createTransaction, handleCloseNewTransactionModal]);
 
   return (
     <Modal
@@ -49,8 +62,8 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({
         <input
           type="number"
           placeholder="Valor"
-          value={value}
-          onChange={(e) => setValue(Number(e.target.value))}
+          value={amount}
+          onChange={(e) => setAmount(Number(e.target.value))}
         />
         <TransactionTypeContainer>
           <RadioBox
