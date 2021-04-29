@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import ITransaction from '../../dtos/ITransaction';
 import api from '../../services/api';
 import { Container } from './styles';
-
-interface ITransaction {
-  id: number;
-  title: string;
-  amount: number;
-  type: string;
-  category: string;
-  createdAt: Date;
-}
 
 const TransactionsTable: React.FC = () => {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
