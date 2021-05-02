@@ -36,9 +36,6 @@ $ yarn install or npm install
 # Run start
 $ yarn start or npm run start
 
-# For test
-$ yarn test or npm run test
-
 # Enjoy!
 ```
 ---
